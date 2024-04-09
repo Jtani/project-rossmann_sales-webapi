@@ -101,7 +101,7 @@ class Rossmann( object ):
 
         # state holiday
         df2['state_holiday'] = df2['state_holiday'].apply( lambda x: 'public_holiday' if x == 'a' else 'easter_holiday' if x == 'b' else 'christmas' if x == 'c' else 'regular_day' )
-
+        
         # 3.0. PASSO 03 - FILTRAGEM DE VARIÁVEIS
         ## 3.1. Filtragem das Linhas
         df2 = df2[df2['open'] != 0]
@@ -130,8 +130,9 @@ class Rossmann( object ):
 
         ### 5.3.1. Encoding
         # state_holiday - One Hot Encoding
-        df5 = pd.get_dummies( df5, prefix=['state_holiday'], columns=['state_holiday'] )
-
+        df5['state_holiday_public_holiday'] = (df5['state_holiday'] == 'public_holiday').astype(bool)
+        df5 = pd.get_dummies( df5, prefix=['state_holiday'], columns=['state_holiday'], dtype=bool )
+        
         # store_type - Label Encoding
         df5['store_type'] = self.store_type_scaler.fit_transform( df5['store_type'] )
 
