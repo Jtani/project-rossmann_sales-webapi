@@ -158,9 +158,16 @@ class Rossmann( object ):
         df5['week_of_year_cos'] = df5['week_of_year'].apply( lambda x: np.cos( x * ( 2. * np.pi/52 ) ) )
         
         
-        cols_selected = [ 'store', 'promo', 'store_type', 'assortment', 'competition_distance', 'competition_open_since_month',
-            'competition_open_since_year', 'promo2', 'promo2_since_week', 'promo2_since_year', 'competition_time_month', 'promo_time_week',
-            'day_of_week_sin', 'day_of_week_cos', 'month_sin', 'month_cos', 'day_sin', 'day_cos', 'week_of_year_sin', 'week_of_year_cos']
+        # cols_selected = [ 'store', 'promo', 'store_type', 'assortment', 'competition_distance', 'competition_open_since_month',
+        #     'competition_open_since_year', 'promo2', 'promo2_since_week', 'promo2_since_year', 'competition_time_month', 'promo_time_week',
+        #     'day_of_week_sin', 'day_of_week_cos', 'month_sin', 'month_cos', 'day_sin', 'day_cos', 'week_of_year_sin', 'week_of_year_cos']
+
+        cols_selected = ['promo', 'day_of_week_sin', 'promo2', 'assortment', 'promo2_since_week',
+       'day_cos', 'promo2_since_year', 'is_promo', 'promo_time_week',
+       'day_sin', 'competition_distance', 'school_holiday', 'day_of_week_cos',
+       'year', 'state_holiday_regular_day', 'week_of_year_cos', 'month_cos',
+       'store_type', 'state_holiday_public_holiday',
+       'competition_open_since_year']
         
         return df5[ cols_selected ]
     
@@ -170,6 +177,6 @@ class Rossmann( object ):
         pred = model.predict( test_data )
         
         # join pred into the original data
-        original_data['prediction'] = np.expm1( pred )
+        # original_data['prediction'] = np.expm1( pred )
         
         return original_data.to_json( orient='records', date_format='iso' )
